@@ -1,5 +1,6 @@
 import { Box, flexbox } from '@mui/system';
 import logo from '../../logo1.png';
+import LoginDialog from "./LoginDialog/LoginDialog";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       flexDirection={'column'}
     >
       <h1>Welcome to the Homepage</h1>
+      <LoginDialog />
       <img
         src={logo}
         style={{ filter: 'invert(100%)' }}
