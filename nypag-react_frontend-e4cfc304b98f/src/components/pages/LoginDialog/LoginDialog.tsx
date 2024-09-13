@@ -1,10 +1,18 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import ActiveUserContext from '../../../Contexts/ActiveUserContext';
 
 const LoginDialog = () => {
-    const [open, setOpen] = useState(true);
+    const { user } = useContext(ActiveUserContext);
+    const [open, setOpen] = useState(!user);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            setOpen(false);
+        }
+    }, [user]);
 
     const handleClose = () => {
         setOpen(false);
