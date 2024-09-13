@@ -6,7 +6,8 @@ import React, {useState} from "react";
 export default function LikeButton() {
     const [liked, setLiked] = useState(false);
 
-    const handleLike =() => {
+    const handleLike = (event: { stopPropagation: () => void; }) => {
+        event.stopPropagation();
         console.log("clicked")
         if (liked){
             console.log("un liked")

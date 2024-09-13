@@ -3,7 +3,6 @@ import logo from '../../../logo1.png';
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import ImagePostSmall from "../../molecules/ImagePost/ImagePostSmall"
 
 export default function HomePage() {
   const navigate = useNavigate();
