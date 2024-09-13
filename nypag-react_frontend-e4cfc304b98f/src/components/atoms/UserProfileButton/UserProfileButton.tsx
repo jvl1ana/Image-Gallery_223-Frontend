@@ -4,32 +4,35 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 
 
-const StyledButton = styled(Button)(({}) => ({
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 20,
-    padding: '0px',
-    lineHeight: 1.5,
-    maxWidth: '40px',
-    minWidth: '40px',
-    maxHeight: '40px',
-    minHeight: '40px',
-    backgroundColor: '#ffffff',
-    color: '#f',
-    borderRadius: '50%',
-    '&:hover': {
-        backgroundColor: '#ffffff',
-        boxShadow: 'none',
-    }
-}));
+
 
 
 type UserProfileButtonProps = {
     UserProfilePicture: string
+    size:string
 }
 
-const UserProfileButton: React.FC<UserProfileButtonProps> = ({UserProfilePicture}) => {
+const UserProfileButton: React.FC<UserProfileButtonProps> = ({UserProfilePicture, size}) => {
     const navigate = useNavigate();
+
+    const StyledButton = styled(Button)(({}) => ({
+        boxShadow: 'none',
+        textTransform: 'none',
+        fontSize: 20,
+        padding: '0px',
+        lineHeight: 1.5,
+        maxWidth: size,
+        minWidth: size,
+        maxHeight: size,
+        minHeight: size,
+        backgroundColor: '#ffffff',
+        color: '#f',
+        borderRadius: '50%',
+        '&:hover': {
+            backgroundColor: '#ffffff',
+            boxShadow: 'none',
+        }
+    }));
 
     const handleClick = (event: { stopPropagation: () => void; }) => {
         event.stopPropagation();

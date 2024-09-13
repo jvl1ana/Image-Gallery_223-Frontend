@@ -2,7 +2,7 @@ import React from "react";
 import {Card, CardContent, Button, Typography} from "@mui/material";
 import LikeButton from "../../atoms/LikeButton";
 import {useNavigate} from "react-router-dom";
-import UserProfileButton from "../../atoms/UserProfileButton";
+import UserProfileButton from "../../atoms/UserProfileButton/UserProfileButton";
 
 type ImagePostSmallProps = {
     Description: string
@@ -24,7 +24,8 @@ const ImagePostSmall: React.FC<ImagePostSmallProps> = ({ Description, UserProfil
                 />
                 <CardContent>
                     <UserProfileButton
-                        UserProfilePicture={UserProfilePicture}/>
+                        UserProfilePicture={UserProfilePicture}
+                    size={'40px'}/>
                     <LikeButton/>
                     <Typography noWrap>
                         {Description}
