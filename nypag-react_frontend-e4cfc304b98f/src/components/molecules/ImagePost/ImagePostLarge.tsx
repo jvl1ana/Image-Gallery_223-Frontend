@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, CardContent, Button, Typography, Grid} from "@mui/material";
 import LikeButton from "../../atoms/LikeButton";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import UserProfileButton from "../../atoms/UserProfileButton/UserProfileButton";
 import items from "./TestData";
 type ImagePostLargeProps = {
@@ -16,15 +16,14 @@ interface item{
 }
 
 const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
-    const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
+    const [post, setPost] = useState<item | undefined>();
 
-    const postId = localStorage.getItem('postId');
-
-    const numericPostId = postId ? parseInt(postId, 10) : null;
-
-    const [post, setPost] = useState<item | undefined>(() => {
-        return items.find(item => item.id == numericPostId);
-    });
+    useEffect(() => {
+        const numericId = parseInt(id || '', 10);
+        const foundPost = items.find(item => item.id === numericId);
+        setPost(foundPost);
+    }, [id]);
     return (
 
             <Card sx={{maxWidth: 1000, minWidth: 1000}}>
@@ -50,7 +49,7 @@ const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
                             </Grid>
                             <Grid item xs={12}>
 
-                                    <Typography noWrap>
+                                    <Typography >
                                         {post?.description}
                                     </Typography>
                             </Grid>

@@ -14,14 +14,9 @@ type ImagePostSmallProps = {
 const ImagePostSmall: React.FC<ImagePostSmallProps> = ({ Description, UserProfilePicture, PostImage, itemID}) => {
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/post')
-        localStorage.setItem('postId', String(itemID))
-
-    }
 
     return (
-        <Button variant="contained" onClick={() => handleClick()}>
+        <Button variant="contained" onClick={() => navigate(`/post/${itemID}`)}>
             <Card sx={{maxWidth: 200, minWidth: 200}}>
                 <img
                     src={PostImage}
