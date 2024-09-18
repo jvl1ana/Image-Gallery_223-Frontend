@@ -23,7 +23,7 @@ export default function SinglePostPage() {
                 back to homepage
             </Button>
             <br/>
-            <ImagePostLarge Description={"hallo"} UserProfilePicture={logo} PostImage={testImage}/>
+            <ImagePostLarge defaultImage={logo}/>
         </Box>
     );
 }

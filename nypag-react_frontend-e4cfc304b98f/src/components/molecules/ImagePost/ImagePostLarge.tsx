@@ -1,25 +1,37 @@
-import React from "react";
+import React, {useState} from "react";
 import {Card, CardContent, Button, Typography, Grid} from "@mui/material";
 import LikeButton from "../../atoms/LikeButton";
 import {useNavigate} from "react-router-dom";
 import UserProfileButton from "../../atoms/UserProfileButton/UserProfileButton";
-
+import items from "./TestData";
 type ImagePostLargeProps = {
-    Description: string
-    UserProfilePicture: string
-    PostImage: string
+    defaultImage: string
 }
 
-const ImagePostLarge: React.FC<ImagePostLargeProps> = ({ Description, UserProfilePicture, PostImage}) => {
+interface item{
+    postImage: string
+    description: string
+    userProfilePhoto: string
+    id: number
+}
+
+const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
     const navigate = useNavigate();
 
+    const postId = localStorage.getItem('postId');
+
+    const numericPostId = postId ? parseInt(postId, 10) : null;
+
+    const [post, setPost] = useState<item | undefined>(() => {
+        return items.find(item => item.id == numericPostId);
+    });
     return (
 
             <Card sx={{maxWidth: 1000, minWidth: 1000}}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <img
-                            src={PostImage}
+                            src={post?.postImage}
                             width={"100%"}
                             height={"100%"}
                             alt="uh oh"
@@ -30,7 +42,7 @@ const ImagePostLarge: React.FC<ImagePostLargeProps> = ({ Description, UserProfil
                         <Grid container spacing={10}>
                             <Grid item xs={6}>
                                 <UserProfileButton
-                                    UserProfilePicture={UserProfilePicture}
+                                    UserProfilePicture={post?.userProfilePhoto || defaultImage}
                                     size={'80px'}/>
                             </Grid>
                             <Grid item xs={6}>
@@ -39,7 +51,7 @@ const ImagePostLarge: React.FC<ImagePostLargeProps> = ({ Description, UserProfil
                             <Grid item xs={12}>
 
                                     <Typography noWrap>
-                                        {Description}
+                                        {post?.description}
                                     </Typography>
                             </Grid>
                         </Grid>

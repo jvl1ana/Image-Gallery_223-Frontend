@@ -20,6 +20,7 @@ export default function PostGallery() {
                         UserProfilePicture={item.userProfilePhoto}
                         Description={item.description}
                         PostImage={item.postImage}
+                        itemID={item.id}
                     />
                 </Box>
             ))}
