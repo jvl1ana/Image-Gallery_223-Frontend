@@ -1,34 +1,43 @@
+import { useContext } from 'react';
+import ActiveUserContext from '../../../Contexts/ActiveUserContext';
 import { useFormik } from 'formik';
 import { Box, Button, TextField } from '@mui/material';
-import { object, string, array } from 'yup';
+import { object, string } from 'yup';
+import PostImageService from '../../../Services/PostImageService';
 
-interface PostProps {
-    submitPostHandler?: (values: Post) => void;
-}
+const PostForm = () => {
+    const { user } = useContext(ActiveUserContext);
 
-interface Post {
-    url: string;
-    author: string;
-    description: string;
-    likes: string[];
-}
-
-const PostForm = ({ submitPostHandler }: PostProps) => {
     const formik = useFormik({
         initialValues: {
             url: '',
-            author: '',
             description: '',
-            likes: [],
+            likes: 0,
         },
         validationSchema: object({
             url: string().url('Must be a valid URL').required('URL is required'),
-            author: string().required('Author is required').min(2, 'Too short').max(50, 'Too long'),
             description: string().required('Description is required').min(10, 'Too short').max(500, 'Too long'),
-            likes: array().of(string().email('Must be a valid email')),
         }),
-        onSubmit: (values: Post) => {
-            console.log('Form submitted, but no action is performed.');
+        onSubmit: async (values) => {
+            if (!user) {
+                alert('User is not logged in');
+                return;
+            }
+
+            try {
+
+                await PostImageService.createImagePost({
+                    ...values,
+                    author: {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    }
+                });
+                alert('Post created successfully');
+            } catch (error) {
+                alert('Error creating post');
+            }
         },
     });
 
@@ -50,20 +59,6 @@ const PostForm = ({ submitPostHandler }: PostProps) => {
                 ) : null}
 
                 <TextField
-                    id="author"
-                    label="Author"
-                    variant="outlined"
-                    sx={{ paddingRight: '10px' }}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    error={Boolean(formik.touched.author && formik.errors.author)}
-                    value={formik.values.author}
-                />
-                {formik.errors.author && formik.touched.author ? (
-                    <div style={{ color: 'red' }}>{formik.errors.author}</div>
-                ) : null}
-
-                <TextField
                     id="description"
                     label="Description"
                     variant="outlined"
@@ -79,16 +74,9 @@ const PostForm = ({ submitPostHandler }: PostProps) => {
                 ) : null}
             </Box>
 
-            <div>
-                <Button
-                    sx={{ marginTop: '15px', marginRight: '10px' }}
-                    variant="contained"
-                    color="success"
-                    type="submit"
-                >
-                    Create Post
-                </Button>
-            </div>
+            <Button sx={{ marginTop: '15px' }} variant="contained" color="success" type="submit">
+                Create Post
+            </Button>
         </form>
     );
 };
