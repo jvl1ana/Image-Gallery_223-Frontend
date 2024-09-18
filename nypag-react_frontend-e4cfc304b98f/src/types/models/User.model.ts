@@ -7,3 +7,13 @@ export type User = {
   lastName: string;
   roles: Role[];
 };
+
+
+export interface UserDTO {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  roles: Role[];
+}
+
