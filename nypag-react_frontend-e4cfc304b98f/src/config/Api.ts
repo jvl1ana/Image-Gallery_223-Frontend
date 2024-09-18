@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import {TOKEN_LOCAL_STORAGE_KEY} from "../Contexts/ActiveUserContext";
 
 /**
  * isDev returns a boolean if the application is running in development-mode.
@@ -21,18 +22,16 @@ const api: AxiosInstance = createAPI();
  * Set the Authorization header on each request equal to the token which
  * is stored inside the localStorage if a user is authenticated.
  */
-api.interceptors.request.use(
-  (request) => {
-    const token = localStorage.getItem("token");
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
     if (token) {
-      request.headers.Authorization = token;
+        config.headers.Authorization = `Bearer ${token}`;
     }
-    return request;
-  },
-  (error) => {
+    return config;
+}, (error) => {
     return Promise.reject(error);
-  }
-);
+});
+
 
 /**
  * Log outgoing requests if the environment is in development-mode
