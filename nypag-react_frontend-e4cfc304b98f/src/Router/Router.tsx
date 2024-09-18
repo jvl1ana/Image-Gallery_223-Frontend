@@ -7,6 +7,8 @@ import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
 import SinglePostPage from "../components/pages/SinglePostPage/SinglePostPage";
 import SighnedInPage from "../components/pages/HomePage/SighnedInPage";
+import NewPostPage from '../components/pages/PostPage/NewPostPage';
+
 
 /**
  * Router component renders a route switch with all available pages
@@ -24,6 +26,11 @@ const Router = () => {
       <Route path={'/post'} element={<SinglePostPage />} />
       <Route path={'/home'} element={<SighnedInPage />} />
       <Route path={'/usergallery'} element={<SinglePostPage />} />
+
+        <Route
+            path={'/create-post'}
+            element={<PrivateRoute requiredAuths={[]} element={<NewPostPage />} />}
+        />
 
       <Route
         path={'/users'}
