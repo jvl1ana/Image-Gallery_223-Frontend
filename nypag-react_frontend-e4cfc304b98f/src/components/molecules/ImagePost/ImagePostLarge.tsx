@@ -11,12 +11,6 @@ type ImagePostLargeProps = {
     defaultImage: string
 }
 
-interface item{
-    postImage: string
-    description: string
-    userProfilePhoto: string
-    id: string | undefined
-}
 
 const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
     const [posts, setPosts] = useState<ImagePostDTO[]>([]);
@@ -34,7 +28,7 @@ const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
     useEffect(() => {
         const foundPost = posts.find(post => post.id === id);
         setPost(foundPost);
-    }, [id]);
+    }, [id, posts]);
 
 
     return (

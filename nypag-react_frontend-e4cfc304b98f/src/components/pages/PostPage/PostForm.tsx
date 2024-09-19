@@ -4,9 +4,11 @@ import { useFormik } from 'formik';
 import { Box, Button, TextField } from '@mui/material';
 import { object, string } from 'yup';
 import PostImageService from '../../../Services/PostImageService';
+import {useNavigate} from "react-router-dom";
 
 const PostForm = () => {
     const { user } = useContext(ActiveUserContext);
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -35,6 +37,7 @@ const PostForm = () => {
                     }
                 });
                 alert('Post created successfully');
+                navigate(`/home`);
             } catch (error) {
                 alert('Error creating post');
             }
