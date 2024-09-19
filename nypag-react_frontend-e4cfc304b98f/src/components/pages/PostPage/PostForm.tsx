@@ -1,24 +1,41 @@
-import { useContext } from 'react';
-import ActiveUserContext from '../../../Contexts/ActiveUserContext';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { Box, Button, TextField } from '@mui/material';
 import { object, string } from 'yup';
+import { ImagePostDTO } from '../../../types/models/ImagePost.model';
 import PostImageService from '../../../Services/PostImageService';
 import {useNavigate} from "react-router-dom";
 
-const PostForm = () => {
+
+type PostFormProps = {
+    initialValues?: ImagePostDTO;
+    onSubmit: (values: ImagePostDTO) => void;
+};
+
+const PostForm: React.FC<PostFormProps> = ({ initialValues, onSubmit }) => {
     const { user } = useContext(ActiveUserContext);
     const navigate = useNavigate();
 
+
     const formik = useFormik({
-        initialValues: {
+        initialValues: initialValues || {
             url: '',
             description: '',
             likes: 0,
+            author: {
+                id: '',
+                firstName: '',
+                lastName: '',
+            },
         },
         validationSchema: object({
             url: string().url('Must be a valid URL').required('URL is required'),
             description: string().required('Description is required').min(10, 'Too short').max(500, 'Too long'),
+            author: object({
+                id: string().required('Author ID is required'),
+                firstName: string().required('First name is required'),
+                lastName: string().required('Last name is required'),
+            }),
         }),
         onSubmit: async (values) => {
             if (!user) {
@@ -75,12 +92,35 @@ const PostForm = () => {
                 {formik.errors.description && formik.touched.description ? (
                     <div style={{ color: 'red' }}>{formik.errors.description}</div>
                 ) : null}
+
+
+                <TextField
+                    id="author.firstName"
+                    label="Author First Name"
+                    variant="outlined"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.author.firstName}
+                />
+                {formik.errors.author?.firstName && formik.touched.author?.firstName ? (
+                    <div style={{ color: 'red' }}>{formik.errors.author.firstName}</div>
+                ) : null}
+
+                <TextField
+                    id="author.lastName"
+                    label="Author Last Name"
+                    variant="outlined"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.author.lastName}
+                />
+                {formik.errors.author?.lastName && formik.touched.author?.lastName ? (
+                    <div style={{ color: 'red' }}>{formik.errors.author.lastName}</div>
+                ) : null}
             </Box>
 
-            <Button
-                id="createButton"
-                sx={{ marginTop: '15px' }} variant="contained" color="success" type="submit">
-                Create Post
+            <Button sx={{ marginTop: '15px' }} variant="contained" color="success" type="submit">
+                {initialValues ? 'Update Post' : 'Create Post'}
             </Button>
         </form>
     );
