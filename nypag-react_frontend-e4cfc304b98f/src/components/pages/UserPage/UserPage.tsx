@@ -16,22 +16,20 @@ const UserPage = () => {
   });
 
   useEffect(() => {
-    return () => {
-      if (userId) {
-        UserService.getUser(userId).then((res) => {
-          return setUser(res);
-        });
-      }
-    };
+    if (userId) {
+      UserService.getUserById(userId).then((res) => {
+        setUser(res);
+      });
+    }
   }, [userId]);
 
   const submitActionHandler = (values: User) => {
-    if (userId !== undefined) {
-      UserService.updateUser(values).then(() => {
+    if (userId) {
+      UserService.updateUser(userId, values).then(() => {
         navigate('../users');
       });
     } else {
-      UserService.addUser(values).then(() => {
+      UserService.registerUser(values).then(() => {
         navigate('/users');
       });
     }
@@ -39,4 +37,5 @@ const UserPage = () => {
 
   return <UserForm user={user} submitActionHandler={submitActionHandler} />;
 };
+
 export default UserPage;

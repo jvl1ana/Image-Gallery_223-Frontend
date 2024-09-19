@@ -29,7 +29,7 @@ const Router = () => {
 
         <Route
             path={'/create-post'}
-            element={<PrivateRoute requiredAuths={[]} element={<NewPostPage />} />}
+             element={<NewPostPage />}
         />
 
       <Route

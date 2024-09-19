@@ -1,72 +1,44 @@
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
-import { User } from '../../../types/models/User.model';
-import UserService from '../../../Services/UserService';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, CardActions, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import UserService from '../../../Services/UserService';
+import { UserDTO } from '../../../types/models/User.model';
 
 const UserTable = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserDTO[]>([]);
 
   useEffect(() => {
-    UserService.getAllUsers().then((data) => {
-      setUsers(data.data);
-    });
+    UserService.getAllUsers().then((data) => setUsers(data));
   }, []);
 
-  const handleAdd = () => {
-    navigate('../useredit/');
-  };
-
-  const handleEdit = (id: string) => {
-    navigate('../useredit/' + id);
-  };
-
-  const handleDelete = (id: string) => {
-    UserService.deleteUser(id);
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Bist du sicher, dass du diesen Benutzer löschen möchtest?')) {
+      try {
+        await UserService.deleteUser(id);
+        setUsers(users.filter((user) => user.id !== id));
+      } catch (error) {
+        alert('Fehler beim Löschen des Benutzers');
+      }
+    }
   };
 
   return (
-    <>
-      {users.map((user) => (
-        <div key={user.id}>
-          <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-              {user.firstName} {user.lastName} {user.email}
+      <div>
+        {users.map((user) => (
+            <Card key={user.id}>
+              <CardContent>
+                <p>{user.firstName} {user.lastName}</p>
+                <p>{user.email}</p>
+              </CardContent>
               <CardActions>
-                <Button
-                  size='small'
-                  color='primary'
-                  variant='contained'
-                  onClick={() => handleEdit(user.id)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  size='small'
-                  color='error'
-                  variant='contained'
-                  onClick={() => handleDelete(user.id)}
-                >
-                  Delete
-                </Button>
+                <Button onClick={() => navigate(`/useredit/${user.id}`)}>Bearbeiten</Button>
+                <Button onClick={() => handleDelete(user.id)} color="error">Löschen</Button>
               </CardActions>
-            </CardContent>
-          </Card>
-        </div>
-      ))}
-      <Button
-        size='small'
-        color='success'
-        variant='contained'
-        onClick={handleAdd}
-      >
-        Add
-      </Button>
-    </>
+            </Card>
+        ))}
+        <Button onClick={() => navigate('/useredit')}>Benutzer hinzufügen</Button>
+      </div>
   );
 };
 

@@ -1,29 +1,39 @@
+
 import api from '../config/Api';
-import { User } from '../types/models/User.model';
+import { UserDTO } from '../types/models/User.model';
+
+
+export const registerUser = async (user: UserDTO) => {
+  const response = await api.post('/user/registerUser', user);
+  return response.data;
+};
+
+export const updateUser = async (id: string, user: UserDTO) => {
+  const response = await api.put(`/user/${id}`, user);
+  return response.data;
+};
+
+const deleteUser = async (id: string) => {
+  await api.delete(`/user/${id}`);
+};
+
+const getAllUsers = async () => {
+  const response = await api.get('/user');
+  return response.data;
+};
+
+const getUserById = async (id: string) => {
+  const response = await api.get(`/user/${id}`);
+  return response.data;
+};
+
 
 const UserService = {
-  getUser: async (userID: string): Promise<User> => {
-    const { data } = await api.get<User>(`/user/${userID}`);
-    return data;
-  },
-
-  updateUser: (user: User) => {
-    return api.put(`/user/${user.id}`, user);
-  },
-
-  addUser: (user: User) => {
-    return api.post('/user/registerUser', user).then((res) => {
-      return res.data;
-    });
-  },
-
-  getAllUsers: () => {
-    return api.get(`/user`);
-  },
-
-  deleteUser: (id: string) => {
-    return api.delete(`/user/${id}`);
-  },
+  registerUser,
+  updateUser,
+  deleteUser,
+  getAllUsers,
+  getUserById,
 };
 
 export default UserService;
