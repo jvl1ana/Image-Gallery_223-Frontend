@@ -51,6 +51,7 @@ export default function PostGallery() {
                             UserProfilePicture={post.author.id}
                             Description={post.description}
                             PostImage={post.url}
+                            itemID={post.id}
                         />
                     </Box>
                 ))}

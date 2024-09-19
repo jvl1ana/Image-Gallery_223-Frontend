@@ -3,7 +3,10 @@ import {Card, CardContent, Button, Typography, Grid} from "@mui/material";
 import LikeButton from "../../atoms/LikeButton";
 import {useNavigate, useParams} from "react-router-dom";
 import UserProfileButton from "../../atoms/UserProfileButton/UserProfileButton";
-import items from "./TestData";
+import {ImagePostDTO} from "../../../types/models/ImagePost.model";
+import PostImageService from '../../../Services/PostImageService';
+import ImagePostSmall from "../../molecules/ImagePost/ImagePostSmall";
+
 type ImagePostLargeProps = {
     defaultImage: string
 }
@@ -12,25 +15,27 @@ interface item{
     postImage: string
     description: string
     userProfilePhoto: string
-    id: number
+    id: string | undefined
 }
 
 const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
+    const [posts, setPosts] = useState<ImagePostDTO[]>([]);
     const { id } = useParams<{ id: string }>();
-    const [post, setPost] = useState<item | undefined>();
+    const [post, setPost] = useState<ImagePostDTO | undefined>();
 
     useEffect(() => {
-        const numericId = parseInt(id || '', 10);
-        const foundPost = items.find(item => item.id === numericId);
+        const foundPost = posts.find(item => item.id === id);
         setPost(foundPost);
     }, [id]);
+
+
     return (
 
             <Card sx={{maxWidth: 1000, minWidth: 1000}}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <img
-                            src={post?.postImage}
+                            src={post?.url}
                             width={"100%"}
                             height={"100%"}
                             alt="uh oh"
@@ -41,7 +46,7 @@ const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
                         <Grid container spacing={10}>
                             <Grid item xs={6}>
                                 <UserProfileButton
-                                    UserProfilePicture={post?.userProfilePhoto || defaultImage}
+                                    UserProfilePicture={defaultImage}
                                     size={'80px'}/>
                             </Grid>
                             <Grid item xs={6}>

@@ -8,7 +8,7 @@ type ImagePostSmallProps = {
     Description: string
     UserProfilePicture: string
     PostImage: string
-    itemID: number
+    itemID: string | undefined
 }
 
 const ImagePostSmall: React.FC<ImagePostSmallProps> = ({ Description, UserProfilePicture, PostImage, itemID}) => {
