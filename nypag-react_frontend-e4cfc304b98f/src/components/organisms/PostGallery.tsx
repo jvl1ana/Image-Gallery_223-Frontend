@@ -1,11 +1,11 @@
-// src/components/organisms/PostGallery/PostGallery.tsx
-import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/system';
-import { Button } from '@mui/material';
+
+import React, { useContext, useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PostImageService from '../../Services/PostImageService';
 import ImagePostSmall from "../molecules/ImagePost/ImagePostSmall";
 import { ImagePostDTO } from '../../types/models/ImagePost.model';
+import ActiveUserContext from "../../Contexts/ActiveUserContext";
 
 type PostGalleryProps = {
     posts: ImagePostDTO[]
@@ -13,11 +13,23 @@ type PostGalleryProps = {
 
 const PostGallery: React.FC<PostGalleryProps> = ({posts}) => {
     const navigate = useNavigate();
+    const { user } = useContext(ActiveUserContext);
 
     const handleCreatePostClick = () => {
         navigate('/create-post');
     };
 
+    const handleAdminClick = () => {
+        navigate('/admin');
+    };
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            const data = await PostImageService.getAllImagePosts();
+            setPosts(data);
+        };
+        fetchPosts();
+    }, []);
 
     return (
         <Box padding={5} sx={{ position: 'relative' }}>
@@ -34,6 +46,23 @@ const PostGallery: React.FC<PostGalleryProps> = ({posts}) => {
             >
                 Create Post
             </Button>
+
+            {user && user.roles.some(role => typeof role.name === 'string' && role.name === 'ADMIN') && (
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleAdminClick}
+                    sx={{
+                        position: 'absolute',
+                        top: '50px',
+                        right: '10px',
+                        zIndex: 1,
+                    }}
+                >
+                    Admin
+                </Button>
+            )}
+
 
             <Box
                 sx={{
