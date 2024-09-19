@@ -6,12 +6,12 @@ import UserProfileButton from "../../atoms/UserProfileButton/UserProfileButton";
 
 type ImagePostSmallProps = {
     Description: string
-    UserProfilePicture: string
+    Userid: string
     PostImage: string
     itemID: string | undefined
 }
 
-const ImagePostSmall: React.FC<ImagePostSmallProps> = ({ Description, UserProfilePicture, PostImage, itemID}) => {
+const ImagePostSmall: React.FC<ImagePostSmallProps> = ({ Description, Userid, PostImage, itemID}) => {
     const navigate = useNavigate();
 
 
@@ -27,7 +27,7 @@ const ImagePostSmall: React.FC<ImagePostSmallProps> = ({ Description, UserProfil
                 />
                 <CardContent>
                     <UserProfileButton
-                        UserProfilePicture={UserProfilePicture}
+                        Userid={Userid}
                     size={'40px'}/>
                     <LikeButton/>
                     <Typography noWrap>

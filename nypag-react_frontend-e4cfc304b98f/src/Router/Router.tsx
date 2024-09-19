@@ -8,6 +8,7 @@ import authorities from '../config/Authorities';
 import SinglePostPage from "../components/pages/SinglePostPage/SinglePostPage";
 import SighnedInPage from "../components/pages/HomePage/SighnedInPage";
 import NewPostPage from '../components/pages/PostPage/NewPostPage';
+import UserGalleryPage from "../components/pages/UserGallery/UserGalleryPage";
 
 
 /**
@@ -25,7 +26,7 @@ const Router = () => {
       <Route path={'/login'} element={<LoginPage />} />
       <Route path={'/post/:id'} element={<SinglePostPage />} />
       <Route path={'/home'} element={<SighnedInPage />} />
-      <Route path={'/usergallery'} element={<SinglePostPage />} />
+      <Route path={'/usergallery/:id'} element={<UserGalleryPage />} />
 
         <Route
             path={'/create-post'}

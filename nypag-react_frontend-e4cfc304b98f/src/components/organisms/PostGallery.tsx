@@ -7,21 +7,17 @@ import PostImageService from '../../Services/PostImageService';
 import ImagePostSmall from "../molecules/ImagePost/ImagePostSmall";
 import { ImagePostDTO } from '../../types/models/ImagePost.model';
 
-export default function PostGallery() {
-    const [posts, setPosts] = useState<ImagePostDTO[]>([]);
+type PostGalleryProps = {
+    posts: ImagePostDTO[]
+}
+
+const PostGallery: React.FC<PostGalleryProps> = ({posts}) => {
     const navigate = useNavigate();
 
     const handleCreatePostClick = () => {
         navigate('/create-post');
     };
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            const data = await PostImageService.getAllImagePosts();
-            setPosts(data);
-        };
-        fetchPosts();
-    }, []);
 
     return (
         <Box padding={5} sx={{ position: 'relative' }}>
@@ -48,7 +44,7 @@ export default function PostGallery() {
                 {posts.map((post, index) => (
                     <Box key={index} sx={{ breakInside: 'avoid', marginBottom: '20px' }}>
                         <ImagePostSmall
-                            UserProfilePicture={post.author.id}
+                            Userid={post.author.id}
                             Description={post.description}
                             PostImage={post.url}
                             itemID={post.id}
@@ -59,3 +55,5 @@ export default function PostGallery() {
         </Box>
     );
 }
+
+export default PostGallery;

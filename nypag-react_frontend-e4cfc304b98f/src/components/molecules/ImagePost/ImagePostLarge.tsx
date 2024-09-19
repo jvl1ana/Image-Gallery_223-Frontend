@@ -48,7 +48,7 @@ const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
                         <Grid container spacing={10}>
                             <Grid item xs={6}>
                                 <UserProfileButton
-                                    UserProfilePicture={defaultImage}
+                                    Userid={post?.author.id}
                                     size={'80px'}/>
                             </Grid>
                             <Grid item xs={6}>

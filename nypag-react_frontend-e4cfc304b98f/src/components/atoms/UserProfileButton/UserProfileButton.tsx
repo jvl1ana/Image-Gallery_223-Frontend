@@ -2,17 +2,18 @@ import {Button} from "@mui/material";
 import {styled} from "@mui/joy";
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import logo from "../../../logo1.png";
 
 
 
 
 
 type UserProfileButtonProps = {
-    UserProfilePicture: string
-    size:string
+    Userid: string | undefined
+    size: string
 }
 
-const UserProfileButton: React.FC<UserProfileButtonProps> = ({UserProfilePicture, size}) => {
+const UserProfileButton: React.FC<UserProfileButtonProps> = ({Userid, size}) => {
     const navigate = useNavigate();
 
     const StyledButton = styled(Button)(({}) => ({
@@ -37,13 +38,13 @@ const UserProfileButton: React.FC<UserProfileButtonProps> = ({UserProfilePicture
     const handleClick = (event: { stopPropagation: () => void; }) => {
         event.stopPropagation();
         console.log("clicked")
-        navigate('/usergallery')
+        navigate(`/usergallery/${Userid}`)
     }
 
     return (
         <StyledButton variant="contained" onClick={handleClick}>
             <img
-                src={UserProfilePicture}
+                src={logo}
                 style={{filter: 'invert(100%)'}}
                 width={"100%"}
                 height={"100%"}

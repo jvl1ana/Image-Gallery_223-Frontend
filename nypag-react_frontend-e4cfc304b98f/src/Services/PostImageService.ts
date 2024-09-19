@@ -12,6 +12,11 @@ export const getAllImagePosts = async () => {
     return response.data;
 };
 
+export const getUsersImagePosts = async (id: string) => {
+    const response = await api.get(`/imagePosts/user/${id}`);
+    return response.data;
+};
+
 export const getImagePostById = async (id: string) => {
     const response = await api.get(`/imagePosts/${id}`);
     return response.data;
@@ -29,6 +34,7 @@ export const deleteImagePost = async (id: string) => {
 const PostImageService = {
     createImagePost,
     getAllImagePosts,
+    getUsersImagePosts,
     getImagePostById,
     updateImagePost,
     deleteImagePost,
