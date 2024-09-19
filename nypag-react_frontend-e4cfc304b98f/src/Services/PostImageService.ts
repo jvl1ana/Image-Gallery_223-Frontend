@@ -8,7 +8,7 @@ export const createImagePost = async (imagePost: ImagePostDTO) => {
 };
 
 export const getAllImagePosts = async () => {
-    const response = await api.get('/imagePosts');
+    const response = await api.get('/imagePosts/');
     return response.data;
 };
 
