@@ -4,8 +4,8 @@ import LikeButton from "../../atoms/LikeButton";
 import {useNavigate, useParams} from "react-router-dom";
 import UserProfileButton from "../../atoms/UserProfileButton/UserProfileButton";
 import {ImagePostDTO} from "../../../types/models/ImagePost.model";
-import PostImageService from '../../../Services/PostImageService';
-import ImagePostSmall from "../../molecules/ImagePost/ImagePostSmall";
+import PostImageService from "../../../Services/PostImageService";
+
 
 type ImagePostLargeProps = {
     defaultImage: string
@@ -24,7 +24,15 @@ const ImagePostLarge: React.FC<ImagePostLargeProps> = ({defaultImage}) => {
     const [post, setPost] = useState<ImagePostDTO | undefined>();
 
     useEffect(() => {
-        const foundPost = posts.find(item => item.id === id);
+        const fetchPosts = async () => {
+            const data = await PostImageService.getAllImagePosts();
+            setPosts(data);
+        };
+        fetchPosts();
+    }, []);
+
+    useEffect(() => {
+        const foundPost = posts.find(post => post.id === id);
         setPost(foundPost);
     }, [id]);
 

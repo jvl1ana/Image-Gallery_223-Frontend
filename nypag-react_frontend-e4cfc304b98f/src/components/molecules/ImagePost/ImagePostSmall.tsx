@@ -23,6 +23,7 @@ const ImagePostSmall: React.FC<ImagePostSmallProps> = ({ Description, UserProfil
                     width={"100%"}
                     height={"100%"}
                     alt="uh oh"
+                    loading="lazy"
                 />
                 <CardContent>
                     <UserProfileButton
