@@ -77,7 +77,9 @@ const PostForm = () => {
                 ) : null}
             </Box>
 
-            <Button sx={{ marginTop: '15px' }} variant="contained" color="success" type="submit">
+            <Button
+                id="createButton"
+                sx={{ marginTop: '15px' }} variant="contained" color="success" type="submit">
                 Create Post
             </Button>
         </form>

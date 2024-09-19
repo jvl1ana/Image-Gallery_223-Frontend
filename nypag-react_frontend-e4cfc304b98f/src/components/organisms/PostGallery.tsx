@@ -22,6 +22,7 @@ const PostGallery: React.FC<PostGalleryProps> = ({posts}) => {
     return (
         <Box padding={5} sx={{ position: 'relative' }}>
             <Button
+                id = "createButton"
                 variant="contained"
                 color="primary"
                 onClick={handleCreatePostClick}
