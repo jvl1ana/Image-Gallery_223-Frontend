@@ -9,6 +9,9 @@ import SinglePostPage from "../components/pages/SinglePostPage/SinglePostPage";
 import SighnedInPage from "../components/pages/HomePage/SighnedInPage";
 import NewPostPage from '../components/pages/PostPage/NewPostPage';
 import UserGalleryPage from "../components/pages/UserGallery/UserGalleryPage";
+import EditPostPage from "../components/pages/EditPostPage/EditPostPage";
+import AdminPage from "../components/pages/AdminPage/AdminPage";
+import UnauthorizedPage from "../components/pages/UnauthorizedPage";
 
 
 /**
@@ -27,16 +30,29 @@ const Router = () => {
       <Route path={'/post/:id'} element={<SinglePostPage />} />
       <Route path={'/home'} element={<SighnedInPage />} />
       <Route path={'/usergallery/:id'} element={<UserGalleryPage />} />
+        <Route path={'/edit-post/:id'} element={<EditPostPage />} />
+        <Route path={'/admin'} element={<AdminPage />} />
+        <Route path='/unauthorized' element={<UnauthorizedPage />} />
+
+        <Route path={'/usergallery'} element={<SinglePostPage />} />
 
         <Route
             path={'/create-post'}
              element={<NewPostPage />}
         />
 
-      <Route
-        path={'/users'}
-        element={<PrivateRoute requiredAuths={[]} element={<UserTable />} />}
-      />
+
+
+
+        <Route
+            path={'/users'}
+            element={
+                <PrivateRoute
+                    requiredAuths={[authorities.USER_READ]}  
+                    element={<UserTable />}
+                />
+            }
+        />
       <Route
         path='/useredit'
         element={
