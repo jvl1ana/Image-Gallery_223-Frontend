@@ -26,3 +26,16 @@ jobs:
         run: |
           docker build -t jxl1an4/ukfrontend:latest nypag-react_frontend-e4cfc304b98f
           docker push jxl1an4/ukfrontend:latest
+      
+      - name: Execute SSH commands via Jump Host
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.JUMP_HOST }}          
+          username: ${{ secrets.JUMP_USERNAME }}  
+          password: ${{ secrets.JUMP_PASSWORD }}  
+          proxy_host: ${{ secrets.PROXY_HOST }}          
+          proxy_username: ${{ secrets.PROXY_USERNAME }}    
+          proxy_password: ${{ secrets.PROXY_PASSWORD }}    
+          script: |
+            docker compose up -d
+          debug: true
