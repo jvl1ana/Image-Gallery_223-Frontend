@@ -26,3 +26,11 @@ jobs:
         run: |
           docker build -t jxl1an4/ukfrontend:latest nypag-react_frontend-e4cfc304b98f
           docker push jxl1an4/ukfrontend:latest
+      
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@ v1.0.0 
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
