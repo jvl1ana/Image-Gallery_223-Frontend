@@ -36,7 +36,7 @@ jobs:
           proxy_username: ${{ secrets.PROXY_USERNAME }}    
           proxy_password: ${{ secrets.PROXY_PASSWORD }}    
           script: |
-            docker pull your-dockerhub-username/your-app:latest
+            docker jxl1an4/ukfrontend:latest
             docker compose down
             docker compose up -d
           debug: true
