@@ -28,7 +28,7 @@ jobs:
           docker push jxl1an4/ukfrontend:latest
       
       - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@ v1.0.0 
+        uses: appleboy/ssh-action@ v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
