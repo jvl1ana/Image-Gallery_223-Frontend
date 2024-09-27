@@ -27,13 +27,16 @@ jobs:
           docker build -t jxl1an4/ukfrontend:latest nypag-react_frontend-e4cfc304b98f
           docker push jxl1an4/ukfrontend:latest
       
-      - name: executing remote ssh commands using password
+      - name: Execute SSH commands via Jump Host
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.JUMP_HOST }}
-          username: ${{ secrets.JUMP_USERNAME }}
-          password: ${{ secrets.JUMP_PASSWORD }}
-          proxy_host: ${{ secrets.PROXY_HOST }}
-          proxy_username: ${{ secrets.PROXY_USERNAME }}
-          proxy_password: ${{ secrets.PROXY_PASSWORD}}
-          script: echo "Hello World"
+          host: ${{ secrets.JUMP_HOST }}          
+          username: ${{ secrets.JUMP_USERNAME }}  
+          password: ${{ secrets.JUMP_PASSWORD }}  
+          proxy_host: ${{ secrets.PROXY_HOST }}          
+          proxy_username: ${{ secrets.PROXY_USERNAME }}    
+          proxy_password: ${{ secrets.PROXY_PASSWORD }}    
+          script: |
+            docker pull your-dockerhub-username/your-app:latest
+            docker compose down
+            docker compose up -d
