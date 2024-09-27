@@ -25,4 +25,4 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build -t jxl1an4/ukfrontend:latest .
-          docker push  jxl1an4/ukfrontend:latest
+          docker push jxl1an4/ukfrontend:latest
