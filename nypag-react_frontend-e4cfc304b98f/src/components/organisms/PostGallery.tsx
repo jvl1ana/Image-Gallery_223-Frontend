@@ -23,14 +23,6 @@ const PostGallery: React.FC<PostGalleryProps> = ({posts}) => {
         navigate('/admin');
     };
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            const data = await PostImageService.getAllImagePosts();
-            setPosts(data);
-        };
-        fetchPosts();
-    }, []);
-
     return (
         <Box padding={5} sx={{ position: 'relative' }}>
             <Button
