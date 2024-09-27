@@ -39,3 +39,4 @@ jobs:
             docker pull your-dockerhub-username/your-app:latest
             docker compose down
             docker compose up -d
+          debug: true
